@@ -8,7 +8,7 @@ public class BulletPlayer : MonoBehaviour
     [SerializeField] private Rigidbody2D _rigidbody;
     [SerializeField] private int _damage;
 
-    void Start()
+   private void Start()
     {
         _rigidbody.velocity = transform.right * _speed;
     }
@@ -18,8 +18,7 @@ public class BulletPlayer : MonoBehaviour
         if (collision.gameObject.TryGetComponent(out Enemy enemy))
         {
             enemy.TakeDamage(_damage);
-            Destroy(gameObject);
-            
+            Destroy(gameObject);           
         }
     }
 }
