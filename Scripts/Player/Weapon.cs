@@ -5,7 +5,7 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     [SerializeField] private Transform _firePoint;
-    [SerializeField] private GameObject _bulletPrefab;
+    [SerializeField] private BulletPlayer _bulletPrefab;
     [SerializeField] private Animator _animator;
 
     private void Update()
