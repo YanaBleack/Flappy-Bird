@@ -19,7 +19,6 @@ public class BulletPlayer : MonoBehaviour
         {
             enemy.TakeDamage(_damage);
             gameObject.SetActive(false);
-           // Destroy(gameObject);
         }
     }
 }
