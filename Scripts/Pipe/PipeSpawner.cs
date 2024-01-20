@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class PipeSpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject _tempLate;
+    [SerializeField] private Pipe _tempLate;
     [SerializeField] private Transform _bird;
     [SerializeField] private float _secondBetwenSpawn;
     [SerializeField] private float _maxSpawnPositionY;
     [SerializeField] private float _minSpawnPositionY;
     [SerializeField] private int _capacity;
 
-    private ObjectPool _pool;
+    private ObjectPool<Pipe> _pool;
     private float _elapsedTime = 0;
     private Camera _camera;
 
@@ -19,17 +19,17 @@ public class PipeSpawner : MonoBehaviour
     {
         _camera = Camera.main;
 
-        List<GameObject> pipes = new List<GameObject>();
+        List<Pipe> pipes = new List<Pipe>();
 
         for (int i = 0; i < _capacity; i++)
         {
-            GameObject spawned = Instantiate(_tempLate);
-            spawned.GetComponentInChildren<BulletSpawner>().SetPlayer(_bird); 
-            spawned.SetActive(false);
+            Pipe spawned = Instantiate(_tempLate);
+            spawned.GetComponentInChildren<BulletSpawner>().SetPlayer(_bird);
+            spawned.gameObject.SetActive(false);
             pipes.Add(spawned);
         }
 
-        _pool = new ObjectPool(pipes);
+        _pool = new ObjectPool<Pipe>(pipes);
     }
 
     public void ResetPipes()
@@ -44,10 +44,10 @@ public class PipeSpawner : MonoBehaviour
         if (_elapsedTime > _secondBetwenSpawn)
         {
             if (_pool.TrySpawn(new Vector3
-                (transform.position.x,
-                Random.Range(_minSpawnPositionY, _maxSpawnPositionY),
-                transform.position.z),
-                out GameObject pipe))
+                    (transform.position.x,
+                        Random.Range(_minSpawnPositionY, _maxSpawnPositionY),
+                        transform.position.z),
+                    out Pipe pipe))
             {
                 _elapsedTime = 0;
                 pipe.GetComponentInChildren<BulletSpawner>(true).gameObject.SetActive(true);

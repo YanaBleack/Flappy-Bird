@@ -2,40 +2,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectPool
+public class ObjectPool<T> where T : MonoBehaviour
 {
-    protected List<GameObject> Objects = new List<GameObject>();
+    protected List<T> _îbjects = new List<T>();
 
-    public ObjectPool(List<GameObject> objects)
+    public ObjectPool(List<T> objects)
     {
-        Objects = objects;
+        _îbjects = objects;
     }
 
-    public bool TrySpawn(Vector3 position, out GameObject gameObject)
+    public bool TrySpawn(Vector3 position, out T spawned)
     {
-        foreach (var obj in Objects)
+       
+        foreach (var obj in _îbjects)
         {
-            if (obj.active == false)
+            if (obj.gameObject. activeSelf == false)
             {
                 obj.transform.position = position;
-                obj.SetActive(true);
-                gameObject = obj;
+                obj.gameObject.SetActive(true);
+                spawned = obj;
 
                 return true;
             }
         }
 
-        gameObject = null;
+        spawned = null;
         return false;
     }
 
-    public List<GameObject> GetObjects() => new List<GameObject>(Objects);
+    public List<T> GetObjects() => new List<T>(_îbjects);
 
     public void Reset()
     {
-        foreach (var obj in Objects)
+        foreach (var obj in _îbjects)
         {
-            obj.SetActive(false);
+            obj.gameObject.SetActive(false);
         }
     }   
 }
