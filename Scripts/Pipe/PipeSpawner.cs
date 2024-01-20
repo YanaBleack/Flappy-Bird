@@ -24,7 +24,7 @@ public class PipeSpawner : MonoBehaviour
         for (int i = 0; i < _capacity; i++)
         {
             GameObject spawned = Instantiate(_tempLate);
-            spawned.GetComponentInChildren<BulletSpawner>().SetPlayer(_bird); // EnemyAttack
+            spawned.GetComponentInChildren<BulletSpawner>().SetPlayer(_bird); 
             spawned.SetActive(false);
             pipes.Add(spawned);
         }
